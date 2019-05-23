@@ -1,0 +1,16 @@
+{
+  "name": "buzzdeee-sguil",
+  "version": "0.1.0",
+  "author": "Sebastian Reitenbach",
+  "summary": "A puppet module to manage sguil NSM",
+  "license": "MIT",
+  "source": "https://github.com/buzzdeee/buzzdeee-sguil",
+  "project_page": "https://github.com/buzzdeee/buzzdeee-sguil",
+  "issues_url": "https://github.com/buzzdeee/buzzdeee-sguil/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+  ,
+  "data_provider": null
+}
+

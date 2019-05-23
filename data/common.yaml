@@ -1,0 +1,22 @@
+sguil::server::package_name: 'sguil-server'
+sguil::server::service_name: sguild
+sguil::server::service_ensure: running
+sguil::server::service_flags: '-d 0'
+sguil::server::user: _sguil
+sguil::server::group: _sguil
+sguil::server::confdir: /etc/sguild
+sguil::server::config::sguild_lib_path: /usr/local/lib/sguil/server
+sguil::server::config::serverport: 7734
+sguil::server::config::sensorport: 7736
+sguil::server::config::rulesdir: /var/sguild_data/rules
+sguil::server::config::tmpdatadir: /tmp
+sguil::server::config::dbname: sguildb
+sguil::server::config::dbuser: sguil
+sguil::server::config::dbpass: changeme
+sguil::server::config::dbhost: 127.0.0.1
+sguil::server::config::dbport: 3306
+sguil::server::config::local_log_dir: /var/sguild_data/archive
+sguil::server::config::tmp_load_dir: /var/sguild_data/load
+sguil::server::config::tcpflow: /usr/local/bin/tcpflow
+sguil::server::config::p0f: 1
+sguil::server::config::p0f_path: /usr/local/sbin/p0f3

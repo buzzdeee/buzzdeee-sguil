@@ -1,0 +1,89 @@
+# $Id: sguild.conf,v 1.30 2011/03/16 23:31:26 bamm Exp $ #
+
+# Set user and group to run as.
+set USER <%= $sguil::server::user %>
+set GROUP <%= $sguil::server::group %>
+
+# Path the sguild libs
+set SGUILD_LIB_PATH <%= $sguil::server::config::sguild_lib_path %>
+
+# DEBUG 0=off 1=important stuff 2=everything.  Option 2 is VERY chatty.
+set DEBUG 2
+
+# Run sguild in daemon mode. 1=on 0=off
+# This overrides above and will set DEBUG off.
+# set DAEMON 1 is the same as using -D
+set DAEMON 0
+
+# Syslog Facility to log to in DAEMON mode
+# Note the Errors will go to SYSLOGFACILITY.err
+# DEBUG == 1 messages go to SYSLOGFACILITY.notice
+# DEBUG == 2 messages go to SYSLOGFACILITY.info
+# So, even at DEBUG == 2 you can send the 'important'
+# debug level 1 messages one place and the noisy info stuff another
+# by twiddling your syslog.conf
+set SYSLOGFACILITY daemon
+
+# Use the below to configure alert aggregation. Aggregation will
+# always use the source IP and signature (message). By default
+# we use the sensor ID too. If you want to override this,
+# then set the below to 0.
+set SENSOR_AGGREGATION_ON 1
+
+# If the server is on a multi interface machine and you want it
+# to only listen on a specific IP addr, then uncomment and put 
+# the correct values here. You can listen on seperate addrs for
+# clients and sensors.
+# set BIND_SENSOR_IP_ADDR 127.0.0.1
+# set BIND_CLIENT_IP_ADDR 127.0.0.1
+
+# What port for sguild to listen on.
+# Client Connects
+set SERVERPORT <%= $sguil::server::config::serverport %>
+
+# Sensor connects
+set SENSORPORT <%= $sguil::server::config::sensorport %>
+
+# Enable HTTPS and websocket. Both services will be served over the same port below
+set HTTPS 0
+set HTTPS_PORT 443
+# Path to the root HTML
+set HTML_PATH {/usr/local/lib/sguil/server/html}
+
+# Path to look for rules. Sguild will append the hostname (/etc/snort/rules/<hostname>/*.rules)
+# Some day we'll move the rules into the DB.
+set RULESDIR <%= $sguil::server::config::rulesdir %>
+
+# Where to temporarily store portscan and session data for loading into the DB
+set TMPDATADIR <%= $sguil::server::config::tmpdatadir %>
+
+# DataBase Info
+set DBNAME <%= $sguil::server::config::dbname %>
+set DBPASS "<%= $sguil::server::config::dbpass %>"
+set DBHOST <%= $sguil::server::config::dbhost %>
+set DBPORT <%= $sguil::server::config::dbport %>
+set DBUSER <%= $sguil::server::config::dbuser %>
+
+# Configs for xscript function
+# Where you want to archive raw file locally when xscripts are requested.
+set LOCAL_LOG_DIR <%= $sguil::server::config::local_log_dir %>
+
+# Where to store DB LOADable files until loaderd can put them in the DB
+set TMP_LOAD_DIR <%= $sguil::server::config::tmp_load_dir %>
+
+# You MUST have tcpflow installed to get xscripts
+# http://www.circlemud.org/~jelson/software/tcpflow/
+set TCPFLOW "<%= $sguil::server::config::tcpflow %>"
+
+# p0f - (C) Michal Zalewski <lcamtuf@gis.net>, William Stearns <wstearns@pobox.com>
+# If you have p0f (a passive OS fingerprinting system) installed, you can have
+# xscriptd attempt to use it by enabling it here. Get p0f at http://www.stearns.org
+#
+# 1=ON, 0=OFF
+set P0F <%= $sguil::server::config::p0f %>
+
+# Path the the p0f binary. Switches -q and -s <filename> are appended on exec,
+# add any others you may need here.
+set P0F_PATH "<%= $sguil::server::config::p0f_path %>"
+
+# Email config moved to sguild.email
