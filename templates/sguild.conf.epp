@@ -1,11 +1,11 @@
 # $Id: sguild.conf,v 1.30 2011/03/16 23:31:26 bamm Exp $ #
 
 # Set user and group to run as.
-set USER <%= $sguil::server::user %>
-set GROUP <%= $sguil::server::group %>
+set USER <%= $::sguil::server::user %>
+set GROUP <%= $::sguil::server::group %>
 
 # Path the sguild libs
-set SGUILD_LIB_PATH <%= $sguil::server::config::sguild_lib_path %>
+set SGUILD_LIB_PATH <%= $::sguil::server::sguild_lib_path %>
 
 # DEBUG 0=off 1=important stuff 2=everything.  Option 2 is VERY chatty.
 set DEBUG 2
@@ -39,10 +39,10 @@ set SENSOR_AGGREGATION_ON 1
 
 # What port for sguild to listen on.
 # Client Connects
-set SERVERPORT <%= $sguil::server::config::serverport %>
+set SERVERPORT <%= $::sguil::server::serverport %>
 
 # Sensor connects
-set SENSORPORT <%= $sguil::server::config::sensorport %>
+set SENSORPORT <%= $::sguil::server::sensorport %>
 
 # Enable HTTPS and websocket. Both services will be served over the same port below
 set HTTPS 0
@@ -52,38 +52,38 @@ set HTML_PATH {/usr/local/lib/sguil/server/html}
 
 # Path to look for rules. Sguild will append the hostname (/etc/snort/rules/<hostname>/*.rules)
 # Some day we'll move the rules into the DB.
-set RULESDIR <%= $sguil::server::config::rulesdir %>
+set RULESDIR <%= $::sguil::server::rulesdir %>
 
 # Where to temporarily store portscan and session data for loading into the DB
-set TMPDATADIR <%= $sguil::server::config::tmpdatadir %>
+set TMPDATADIR <%= $::sguil::server::tmpdatadir %>
 
 # DataBase Info
-set DBNAME <%= $sguil::server::config::dbname %>
-set DBPASS "<%= $sguil::server::config::dbpass %>"
-set DBHOST <%= $sguil::server::config::dbhost %>
-set DBPORT <%= $sguil::server::config::dbport %>
-set DBUSER <%= $sguil::server::config::dbuser %>
+set DBNAME <%= $::sguil::server::dbname %>
+set DBPASS "<%= $::sguil::server::dbpass %>"
+set DBHOST <%= $::sguil::server::dbhost %>
+set DBPORT <%= $::sguil::server::dbport %>
+set DBUSER <%= $::sguil::server::dbuser %>
 
 # Configs for xscript function
 # Where you want to archive raw file locally when xscripts are requested.
-set LOCAL_LOG_DIR <%= $sguil::server::config::local_log_dir %>
+set LOCAL_LOG_DIR <%= $::sguil::server::local_log_dir %>
 
 # Where to store DB LOADable files until loaderd can put them in the DB
-set TMP_LOAD_DIR <%= $sguil::server::config::tmp_load_dir %>
+set TMP_LOAD_DIR <%= $::sguil::server::tmp_load_dir %>
 
 # You MUST have tcpflow installed to get xscripts
 # http://www.circlemud.org/~jelson/software/tcpflow/
-set TCPFLOW "<%= $sguil::server::config::tcpflow %>"
+set TCPFLOW "<%= $::sguil::server::tcpflow %>"
 
 # p0f - (C) Michal Zalewski <lcamtuf@gis.net>, William Stearns <wstearns@pobox.com>
 # If you have p0f (a passive OS fingerprinting system) installed, you can have
 # xscriptd attempt to use it by enabling it here. Get p0f at http://www.stearns.org
 #
 # 1=ON, 0=OFF
-set P0F <%= $sguil::server::config::p0f %>
+set P0F <%= $::sguil::server::p0f %>
 
 # Path the the p0f binary. Switches -q and -s <filename> are appended on exec,
 # add any others you may need here.
-set P0F_PATH "<%= $sguil::server::config::p0f_path %>"
+set P0F_PATH "<%= $::sguil::server::p0f_path %>"
 
 # Email config moved to sguild.email

@@ -50,6 +50,21 @@ class sguil::server(
   String $confdir,
   String $user,
   String $group,
+  String $sguild_lib_path,
+  Integer $serverport,
+  Integer $sensorport,
+  String $rulesdir,
+  String $tmpdatadir,
+  String $dbname,
+  String $dbuser,
+  String $dbpass,
+  String $dbhost,
+  Integer $dbport,
+  String $local_log_dir,
+  String $tmp_load_dir,
+  String $tcpflow,
+  Integer $p0f,
+  String $p0f_path,
 ) {
 
   package { $package_name:
@@ -63,14 +78,60 @@ class sguil::server(
 
   file { "${confdir}/sguild.conf":
     ensure  => file,
+    owner   => 'root',
+    group   => $group,
+    mode    => '0640',
     content => epp('sguil/sguild.conf.epp'),
-    require => File[$confdir]
+    require => File[$confdir],
   }
+
+  file { '/var/log/sguild':
+    ensure => 'directory',
+    owner  => $user,
+    group  => '0',
+    mode   => '0755',
+  }
+
+  file { "${confdir}/certs":
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[$confdir],
+  }
+
+  file { dirname($local_log_dir):
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[$confdir],
+  }  
+  file { "${local_log_dir}":
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[$confdir],
+  }
+  file { "${tmp_load_dir}":
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[$confdir],
+  }
+
 
   service { $service_name:
     ensure  => $service_ensure,
     flags   => $service_flags,
-    require => File["${confdir}/sguild.conf"],
+    require => [ File["${confdir}/sguild.conf"],
+    		File["${confdir}/certs"],
+    		File['/var/log/sguild'],
+    		File[$tmp_load_dir],
+    		File[$local_log_dir],
+		],
   }
 
 }
