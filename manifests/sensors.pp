@@ -65,14 +65,14 @@ class sguil::sensors (
     case $params['type'] {
       'pcap': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
-                  owner   => ${params['daemon_user']},
+                  owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0440',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
-                      'hostname'    => $params['hostname'],
-                      'net_group'   => $params['net_group'],
-                      'log_dir'     => $params['log_dir'],
-                      'file_prefix' => $params['file_prefix'], })
+                      'hostname'         => $params['hostname'],
+                      'net_group'        => $params['net_group'],
+                      'log_dir'          => $params['log_dir'],
+                      'file_prefix'      => $params['file_prefix'], })
                 }
 
                 service { "sguil_${params['type']}sensor_${sensor}":
@@ -83,7 +83,7 @@ class sguil::sensors (
               }
       'snort': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
-                  owner   => 'root',
+                  owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0640',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
@@ -93,6 +93,7 @@ class sguil::sensors (
                       'hostname'    => $params['hostname'],
                       'net_group'   => $params['net_group'],
                       'log_dir'     => $params['log_dir'],
+                      'snort_perf_stats' => $params['snort_perf_stats'],
                       'portscan' => $params['portscan'], })
                 }
 
