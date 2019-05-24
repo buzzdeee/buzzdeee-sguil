@@ -122,7 +122,6 @@ class sguil::server(
     ensure  => $service_ensure,
     flags   => $service_flags,
     require => [ File["${confdir}/sguild.conf"],
-    		File["${confdir}/certs"],
     		File['/var/log/sguild'],
     		File[$tmp_load_dir],
     		File[$local_log_dir],
