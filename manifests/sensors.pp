@@ -65,9 +65,9 @@ class sguil::sensors (
     case $params['type'] {
       'pcap': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
-                  owner   => 'root',
+                  owner   => ${params['daemon_user']},
                   group   => '0',
-                  mode    => '0640',
+                  mode    => '0440',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
                       'hostname'    => $params['hostname'],
                       'net_group'   => $params['net_group'],
