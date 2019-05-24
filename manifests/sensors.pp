@@ -57,7 +57,9 @@ class sguil::sensors (
         group      => '0',
         mode       => '0755',
         content    => epp('sguil/sensor_rcscript.epp', {
-        configfile => "/etc/sguil_${params['type']}sensor_${sensor}.conf"
+        'configfile' => "/etc/sguil_${params['type']}sensor_${sensor}.conf",
+        'agenttype'  => $params['type'],
+        'daemon_user' => $params['daemon_user'],
       })
     }
     case $params['type'] {
