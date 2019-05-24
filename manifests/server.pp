@@ -95,14 +95,6 @@ class sguil::server(
     mode   => '0755',
   }
 
-  file { "${confdir}/certs":
-    ensure  => 'directory',
-    owner   => $user,
-    group   => '0',
-    mode    => '0755',
-    require => File[$confdir],
-  }
-
   file { dirname($local_log_dir):
     ensure  => 'directory',
     owner   => $user,
