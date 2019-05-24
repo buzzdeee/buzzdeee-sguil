@@ -65,6 +65,9 @@ class sguil::server(
   String $tcpflow,
   Integer $p0f,
   String $p0f_path,
+  Integer $https,
+  Integer $https_port,
+  String $html_path,
 ) {
 
   package { $package_name:

@@ -45,10 +45,10 @@ set SERVERPORT <%= $::sguil::server::serverport %>
 set SENSORPORT <%= $::sguil::server::sensorport %>
 
 # Enable HTTPS and websocket. Both services will be served over the same port below
-set HTTPS 0
-set HTTPS_PORT 443
+set HTTPS <%= $::sguil::server::https %>
+set HTTPS_PORT <%= $::sguil::server::https_port %>
 # Path to the root HTML
-set HTML_PATH {/usr/local/lib/sguil/server/html}
+set HTML_PATH {<%= $::sguil::server::html_path %>}
 
 # Path to look for rules. Sguild will append the hostname (/etc/snort/rules/<hostname>/*.rules)
 # Some day we'll move the rules into the DB.
