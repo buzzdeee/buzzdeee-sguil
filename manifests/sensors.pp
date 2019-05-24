@@ -56,17 +56,17 @@ class sguil::sensors (
         owner      => 'root',
         group      => '0',
         mode       => '0755',
-        contents   => epp('sguil/sensor_rcscript.epp', {
+        content    => epp('sguil/sensor_rcscript.epp', {
         configfile => "/etc/sguil_${params['type']}sensor_${sensor}.conf"
       })
     }
     case $params['type'] {
       'pcap': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
-                  owner => 'root',
-                  group => '0',
-                  mode  => '0640',
-                  contents => epp("sguil/${params['type']}_agent.conf.epp", {
+                  owner   => 'root',
+                  group   => '0',
+                  mode    => '0640',
+                  content => epp("sguil/${params['type']}_agent.conf.epp", {
                       'hostname'    => $params['hostname'],
                       'net_group'   => $params['net_group'],
                       'log_dir'     => $params['log_dir'],
@@ -81,10 +81,10 @@ class sguil::sensors (
               }
       'snort': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
-                  owner => 'root',
-                  group => '0',
-                  mode  => '0640',
-                  contents => epp("sguil/${params['type']}_agent.conf.epp", {
+                  owner   => 'root',
+                  group   => '0',
+                  mode    => '0640',
+                  content => epp("sguil/${params['type']}_agent.conf.epp", {
                       'server_host' => $params['server_host'],
                       'server_port' => $params['server_port'],
                       'by_port'     => $params['by_port'],
