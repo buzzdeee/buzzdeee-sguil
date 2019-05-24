@@ -23,3 +23,4 @@ sguil::server::p0f_path: /usr/local/sbin/p0f3
 sguil::server::https: 0
 sguil::server::https_port: 4443
 sguil::server::html_path: /usr/local/lib/sguil/server/html
+sguil::sensors::package_name: 'sguil-sensor'
