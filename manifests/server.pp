@@ -54,6 +54,7 @@ class sguil::server(
   Integer $serverport,
   Integer $sensorport,
   String $rulesdir,
+  String $real_rulesdir,
   String $tmpdatadir,
   String $dbname,
   String $dbuser,
@@ -68,6 +69,8 @@ class sguil::server(
   Integer $https,
   Integer $https_port,
   String $html_path,
+  Array $sensors,
+  Optional[Array] $additional_groups,
 ) {
 
   package { $package_name:
@@ -101,20 +104,41 @@ class sguil::server(
     group   => '0',
     mode    => '0755',
     require => File[$confdir],
-  }  
-  file { "${local_log_dir}":
-    ensure  => 'directory',
-    owner   => $user,
-    group   => '0',
-    mode    => '0755',
-    require => File[$confdir],
   }
-  file { "${tmp_load_dir}":
+  file { $local_log_dir:
     ensure  => 'directory',
     owner   => $user,
     group   => '0',
     mode    => '0755',
-    require => File[$confdir],
+    require => File[dirname($local_log_dir)],
+  }
+  file { $tmp_load_dir:
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[dirname($local_log_dir)],
+  }
+  file { $rulesdir:
+    ensure  => 'directory',
+    owner   => $user,
+    group   => '0',
+    mode    => '0755',
+    require => File[dirname($local_log_dir)],
+  }
+  $sensors.each |Integer $index, String $sensor| {
+    file { "${rulesdir}/${sensor}":
+      ensure  => 'link',
+      target  => $real_rulesdir,
+      require => File[$rulesdir],
+    }
+  }
+
+  if $additional_groups {
+    user { $user:
+      groups     => $additional_groups,
+      membership => 'minimum',
+    }
   }
 
 
@@ -122,10 +146,10 @@ class sguil::server(
     ensure  => $service_ensure,
     flags   => $service_flags,
     require => [ File["${confdir}/sguild.conf"],
-    		File['/var/log/sguild'],
-    		File[$tmp_load_dir],
-    		File[$local_log_dir],
-		],
+                  File['/var/log/sguild'],
+                  File[$tmp_load_dir],
+                  File[$local_log_dir],
+                ],
   }
 
 }

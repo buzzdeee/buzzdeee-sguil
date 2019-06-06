@@ -9,6 +9,9 @@ sguil::server::sguild_lib_path: /usr/local/lib/sguil/server
 sguil::server::serverport: 7734
 sguil::server::sensorport: 7736
 sguil::server::rulesdir: /var/sguild_data/rules
+sguil::server::real_rulesdir: /var/suricata/rules
+sguil::server::sensors:
+  - ${::fqdn}
 sguil::server::tmpdatadir: /tmp
 sguil::server::dbname: sguildb
 sguil::server::dbuser: sguil
