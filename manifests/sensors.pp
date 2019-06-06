@@ -94,6 +94,7 @@ class sguil::sensors (
                       'net_group'   => $params['net_group'],
                       'log_dir'     => $params['log_dir'],
                       'snort_perf_stats' => $params['snort_perf_stats'],
+                      'snort_perf_file' => $params['snort_perf_file'],
                       'portscan' => $params['portscan'], })
                 }
 

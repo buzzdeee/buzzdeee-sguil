@@ -39,7 +39,7 @@ set PORTSCAN_DIR ${LOG_DIR}/${HOSTNAME}/portscans
 # 1=enable 0=disable
 set SNORT_PERF_STATS <%= $snort_perf_stats %>
 # File being logged to: 
-set SNORT_PERF_FILE "${LOG_DIR}/${HOSTNAME}/snort/snort.stats"
+set SNORT_PERF_FILE "<%= $snort_perf_file %>"
 
 # sensor agent reports current disk use up to sguild
 # Useful for keep tabs on how big the partion you are
