@@ -6,11 +6,11 @@
 
 # DEBUG is VERY chatty. Use it only when needed.
 # 1=on 0=off
-set DEBUG 0
+set DEBUG 1
 
 # Run in background
 # 1=yes 0=no
-set DAEMON 1
+set DAEMON 0
 
 # Name of sguild server
 set SERVER_HOST localhost
@@ -30,7 +30,7 @@ set LOG_DIR <%= $log_dir %>
 
 # Where raw/pcap files are being logged to and will be read from.
 # (see -l in log_packets.sh)
-set RAW_LOG_DIR ${LOG_DIR}/${HOSTNAME}/dailylogs
+set RAW_LOG_DIR ${LOG_DIR}/pcap
 # What is the prefix for the pcap files (snort.log.#######, log.pcap.########, etc)
 set FILE_PREFIX <%= $file_prefix %>
 
@@ -43,7 +43,7 @@ set TMP_DIR "/tmp"
 # sensor agent reports current disk use up to sguild
 # Useful for keep tabs on how big the partion you are
 # logging pcap data to is getting.
-set WATCH_DIR ${LOG_DIR}/${HOSTNAME}
+set WATCH_DIR ${LOG_DIR}/pcap
 
 #
 # Delay in milliseconds for doing different functions.

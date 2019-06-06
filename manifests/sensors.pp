@@ -69,10 +69,11 @@ class sguil::sensors (
                   group   => '0',
                   mode    => '0440',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
-                      'hostname'         => $params['hostname'],
-                      'net_group'        => $params['net_group'],
-                      'log_dir'          => $params['log_dir'],
-                      'file_prefix'      => $params['file_prefix'], })
+                      'hostname'    => $params['hostname'],
+                      'server_port' => $params['server_port'],
+                      'net_group'   => $params['net_group'],
+                      'log_dir'     => $params['log_dir'],
+                      'file_prefix' => $params['file_prefix'], })
                 }
 
                 service { "sguil_${params['type']}sensor_${sensor}":
