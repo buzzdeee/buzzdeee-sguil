@@ -22,7 +22,7 @@ sguil::server::local_log_dir: /var/sguild_data/archive
 sguil::server::tmp_load_dir: /var/sguild_data/load
 sguil::server::tcpflow: /usr/local/bin/tcpflow
 sguil::server::p0f: 1
-sguil::server::p0f_path: /usr/local/sbin/p0f3
+sguil::server::p0f_path: /usr/local/sbin/p0f
 sguil::server::https: 0
 sguil::server::https_port: 4443
 sguil::server::html_path: /usr/local/lib/sguil/server/html
