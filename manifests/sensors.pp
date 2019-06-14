@@ -52,6 +52,7 @@ class sguil::sensors (
   }
 
   $sensors.each |String $sensor, Hash $params| {
+    # Create the rc script
     file { "/etc/rc.d/sguil_${params['type']}sensor_${sensor}":
         owner      => 'root',
         group      => '0',
@@ -62,6 +63,7 @@ class sguil::sensors (
         'daemon_user' => $params['daemon_user'],
       })
     }
+    # and the config file for the sensor
     case $params['type'] {
       'pcap': {
                 file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
@@ -74,12 +76,6 @@ class sguil::sensors (
                       'net_group'   => $params['net_group'],
                       'log_dir'     => $params['log_dir'],
                       'file_prefix' => $params['file_prefix'], })
-                }
-
-                service { "sguil_${params['type']}sensor_${sensor}":
-                  ensure => running,
-                  require => [ File["/etc/rc.d/sguil_${params['type']}sensor_${sensor}"],
-                              File["/etc/sguil_${params['type']}sensor_${sensor}.conf"]],
                 }
               }
       'snort': {
@@ -98,16 +94,30 @@ class sguil::sensors (
                       'snort_perf_file' => $params['snort_perf_file'],
                       'portscan' => $params['portscan'], })
                 }
-
-                service { "sguil_${params['type']}sensor_${sensor}":
-                  ensure  => running,
-                  require => [ File["/etc/rc.d/sguil_${params['type']}sensor_${sensor}"],
-                              File["/etc/sguil_${params['type']}sensor_${sensor}.conf"]],
+              }
+      'suricata': {
+                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                  owner   => $params['daemon_user'],
+                  group   => '0',
+                  mode    => '0640',
+                  content => epp("sguil/${params['type']}_agent.conf.epp", {
+                      'server_host' => $params['server_host'],
+                      'server_port' => $params['server_port'],
+                      'hostname'    => $params['hostname'],
+                      'net_group'   => $params['net_group'],
+                      'eve_file'    => $params['seve_file'],
+                      'waldo_file'  => $params['waldo_file'], })
                 }
               }
       default: { notice("sensor type ${params['type']} not supported")
                 fail()
               }
+    }
+    # and take care of the service itself
+    service { "sguil_${params['type']}sensor_${sensor}":
+        ensure  => running,
+        require => [ File["/etc/rc.d/sguil_${params['type']}sensor_${sensor}"],
+                    File["/etc/sguil_${params['type']}sensor_${sensor}.conf"]],
     }
   }
 
