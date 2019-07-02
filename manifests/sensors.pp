@@ -105,8 +105,21 @@ class sguil::sensors (
                       'server_port' => $params['server_port'],
                       'hostname'    => $params['hostname'],
                       'net_group'   => $params['net_group'],
-                      'eve_file'    => $params['seve_file'],
+                      'eve_file'    => $params['eve_file'],
                       'waldo_file'  => $params['waldo_file'], })
+                }
+              }
+      'sancp': {
+                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                  owner   => $params['daemon_user'],
+                  group   => '0',
+                  mode    => '0640',
+                  content => epp("sguil/${params['type']}_agent.conf.epp", {
+                      'server_host' => $params['server_host'],
+                      'server_port' => $params['server_port'],
+                      'hostname'    => $params['hostname'],
+                      'net_group'   => $params['net_group'],
+                      'sancp_dir'   => $params['sancp_dir'], })
                 }
               }
       default: { notice("sensor type ${params['type']} not supported")
