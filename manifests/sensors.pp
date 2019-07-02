@@ -128,7 +128,7 @@ class sguil::sensors (
     }
     # and take care of the service itself
     service { "sguil_${params['type']}sensor_${sensor}":
-        ensure  => running,
+        ensure  => enabled,
         require => [ File["/etc/rc.d/sguil_${params['type']}sensor_${sensor}"],
                     File["/etc/sguil_${params['type']}sensor_${sensor}.conf"]],
     }
