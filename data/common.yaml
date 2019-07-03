@@ -11,7 +11,7 @@ sguil::server::sensorport: 7736
 sguil::server::rulesdir: /var/sguild_data/rules
 sguil::server::real_rulesdir: /var/suricata/rules
 sguil::server::sensors:
-  - ${::fqdn}
+  - "%{::fqdn}"
 sguil::server::tmpdatadir: /tmp
 sguil::server::dbname: sguildb
 sguil::server::dbuser: sguil
