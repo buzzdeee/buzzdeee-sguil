@@ -52,21 +52,10 @@ class sguil::sensors (
   }
 
   $sensors.each |String $sensor, Hash $params| {
-    # Create the rc script
-    file { "/etc/rc.d/sguil_${params['type']}sensor_${sensor}":
-        owner      => 'root',
-        group      => '0',
-        mode       => '0755',
-        content    => epp('sguil/sensor_rcscript.epp', {
-        'configfile' => "/etc/sguil_${params['type']}sensor_${sensor}.conf",
-        'agenttype'  => $params['type'],
-        'daemon_user' => $params['daemon_user'],
-      })
-    }
-    # and the config file for the sensor
+    # take care of the sensors config file
     case $params['type'] {
       'pcap': {
-                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                file { "/etc/${params['type']}_agent.conf":
                   owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0440',
@@ -79,24 +68,24 @@ class sguil::sensors (
                 }
               }
       'snort': {
-                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                file { "/etc/${params['type']}_agent.conf":
                   owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0640',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
-                      'server_host' => $params['server_host'],
-                      'server_port' => $params['server_port'],
-                      'by_port'     => $params['by_port'],
-                      'hostname'    => $params['hostname'],
-                      'net_group'   => $params['net_group'],
-                      'log_dir'     => $params['log_dir'],
+                      'server_host'      => $params['server_host'],
+                      'server_port'      => $params['server_port'],
+                      'by_port'          => $params['by_port'],
+                      'hostname'         => $params['hostname'],
+                      'net_group'        => $params['net_group'],
+                      'log_dir'          => $params['log_dir'],
                       'snort_perf_stats' => $params['snort_perf_stats'],
-                      'snort_perf_file' => $params['snort_perf_file'],
-                      'portscan' => $params['portscan'], })
+                      'snort_perf_file'  => $params['snort_perf_file'],
+                      'portscan'         => $params['portscan'], })
                 }
               }
       'suricata': {
-                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                file { "/etc/${params['type']}_agent.conf":
                   owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0640',
@@ -110,7 +99,7 @@ class sguil::sensors (
                 }
               }
       'sancp': {
-                file { "/etc/sguil_${params['type']}sensor_${sensor}.conf":
+                file { "/etc/${params['type']}_agent.conf":
                   owner   => $params['daemon_user'],
                   group   => '0',
                   mode    => '0640',
@@ -127,11 +116,11 @@ class sguil::sensors (
               }
     }
     # and take care of the service itself
-    service { "sguil_${params['type']}sensor_${sensor}":
+    service { "${params['type']}_agent":
         ensure  => running,
         enable  => true,
-        require => [ File["/etc/rc.d/sguil_${params['type']}sensor_${sensor}"],
-                    File["/etc/sguil_${params['type']}sensor_${sensor}.conf"]],
+        flags   => "-c /etc/${params['type']}_agent.conf",
+        require => File["/etc/${params['type']}_agent.conf"],
     }
   }
 
