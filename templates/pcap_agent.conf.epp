@@ -13,7 +13,7 @@ set DEBUG 1
 set DAEMON 0
 
 # Name of sguild server
-set SERVER_HOST localhost
+set SERVER_HOST <%= $server_host %>
 # Port sguild listens on for sensor connects
 set SERVER_PORT <%= $server_port %>
 # Local hostname - that means this machines name

@@ -61,6 +61,7 @@ class sguil::sensors (
                   mode    => '0440',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
                       'hostname'    => $params['hostname'],
+                      'server_host' => $params['server_host'],
                       'server_port' => $params['server_port'],
                       'net_group'   => $params['net_group'],
                       'pads_fifo'   => $params['pads_fifo'], })
@@ -73,6 +74,7 @@ class sguil::sensors (
                   mode    => '0440',
                   content => epp("sguil/${params['type']}_agent.conf.epp", {
                       'hostname'    => $params['hostname'],
+                      'server_host' => $params['server_host'],
                       'server_port' => $params['server_port'],
                       'net_group'   => $params['net_group'],
                       'log_dir'     => $params['log_dir'],

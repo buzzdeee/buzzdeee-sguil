@@ -20,7 +20,7 @@ set SERVER_PORT <%= $server_port %>
 # Note: Sensors monitoring multiple interfaces need to use a unique 'hostname'
 #       for each interface. Make sure this name is the same in the respective
 #       log_packets.sh
-set HOSTNAME <%= hostname %>
+set HOSTNAME <%= $hostname %>
 # The net id is used to correlate data from different agents. This number should match
 # the number of the pcap_agent.
 set NET_GROUP <%= $net_group %>
