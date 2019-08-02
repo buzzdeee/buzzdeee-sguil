@@ -54,6 +54,21 @@ class sguil::sensors (
   $sensors.each |String $sensor, Hash $params| {
     # take care of the sensors config file
     case $params['type'] {
+      'ossec': {
+                file { "/etc/${params['type']}_agent.conf":
+                  owner   => $params['daemon_user'],
+                  group   => '0',
+                  mode    => '0440',
+                  content => epp("sguil/${params['type']}_agent.conf.epp", {
+                      'hostname'           => $params['hostname'],
+                      'server_host'        => $params['server_host'],
+                      'server_port'        => $params['server_port'],
+                      'net_group'          => $params['net_group'],
+                      'dns'                => $params['dns'],
+                      'use_dns'            => $params['use_dns'],
+                      'default_dns_domain' => $params['default_dns_domain'], })
+                }
+              }
       'pads': {
                 file { "/etc/${params['type']}_agent.conf":
                   owner   => $params['daemon_user'],
